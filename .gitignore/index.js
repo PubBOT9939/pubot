@@ -16,6 +16,6 @@ client.on('message', (message) => {
 })
 
 client.on('ready', () => {
-	client.user.setActivity(`${prefix}help`, {type: "WATCHING"});
+	client.user.setActivity("p;help | Pu'Bot");
 })
 client.login("NjIxMzM4NzQ5NTU2NDkwMjYw.XXj7ow.hCfsF32DEb5XQLqhIX9e6AdGJ5s")
