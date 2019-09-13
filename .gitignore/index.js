@@ -34,10 +34,10 @@ client.on('message', (message) => {
 				.setColor("#1594c2")
 				.setAuthor(`${message.author.username}` + '#' + `${message.author.discriminator}`)
 				.addField('Serveur Discord', message.guild.name, true)
-				.addField('Message', global3)
-				.setFooter(`Pu'Bot`, client.user.displayAvatarURL)
+				.addField('Pub', global3)
+				.setFooter(`Pu'Bot by WiiZ#9939`, client.user.displayAvatarURL)
 				.setTimestamp()
-				client.channels.findAll('name', "Pu'client").map(channel => channel.send(embedglobal))
+				client.channels.findAll('name', "pupub-inter").map(channel => channel.send(embedglobal))
 
 	}
 })
