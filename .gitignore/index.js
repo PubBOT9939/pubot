@@ -341,3 +341,5 @@ client.on('ready', () => {
 	client.user.setActivity("p;help | Pu'Bot");
 	console.log("bot on!")
 })
+
+client.login(process.env.TOKEN)
