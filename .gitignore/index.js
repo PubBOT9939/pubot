@@ -206,6 +206,7 @@ client.on("message", message => {
 		.addField("**Discriminator:**", `${message.author.discriminator}`, true)
 		.addField("**Status:**", `${message.author.presence.status}`, true)
 		.addField("**Created At:**", `${message.author.createdAt}`, true)
+		.addField("**Ajouter le bot**", "[Clique ici !](https://discordapp.com/oauth2/authorize?client_id=621338749556490260&scope=bot&permissions=8)")
 		.setFooter(`By ${client.user.username}`, client.user.displayAvatarURL);
 		message.channel.send('UserInfo envoyés en MP !').then(m=>m.delete(5000))
 		message.author.send(uEmbed);
@@ -225,6 +226,7 @@ client.on("message", message => {
 		.addField('**Status**', client.user.presence.status, true)
 		.addField('**Created By**', "WiiZ#9939", true)
 		.addField('**Created At**', client.user.createdAt, true)
+		.addField("**Ajouter le bot**", "[Clique ici !](https://discordapp.com/oauth2/authorize?client_id=621338749556490260&scope=bot&permissions=8)")
 		.setFooter(`By ${client.user.username}`, client.user.displayAvatarURL)
 		message.channel.send('BotInfo envoyés en MP !').then(m=>m.delete(5000))
 		message.author.send(botinfo_embed);
@@ -242,6 +244,7 @@ client.on("message", message => {
 		.addField("**Guild Owner:**", `${message.guild.owner}`, true)
 		.addField("**Member Count:**", `${message.guild.memberCount}`, true)
 		.addField("**Role Count:**", `${message.guild.roles.size}`, true)
+		.addField("**Ajouter le bot**", "[Clique ici !](https://discordapp.com/oauth2/authorize?client_id=621338749556490260&scope=bot&permissions=8)")
 		.setFooter(`By ${client.user.username}`, client.user.displayAvatarURL);
 		message.channel.send('ServerInfo envoyés en MP !').then(m=>m.delete(5000))
 		message.author.send(sEmbed);
@@ -321,13 +324,14 @@ client.on('message', message => {
 
 		let info_embed = new Discord.RichEmbed()
 		.setColor('#04c2db')
-		.addField("Informations de Pu'Bot", "p;help\n**Affiche les commandes de Pu'Bot**\n\np;botinfo\n**Affiche les informations de Pu'Bot**\n\np;userinfo\n**Affiche tes informations**\n\np;serverinfo\n**Affiche les informations du serveur sur lequel tu te trouves**\n\np;say\n**Permet de faire dire quelque chose au bot**\n\np;annonce\n**Permet de créer une annonce sous forme d'embed**\n\np;embed\n**Permet de faire un message sous forme d'embed**")
+		.addField("Informations de Pu'Bot", "p;help\n**Affiche les commandes de Pu'Bot**\n\np;botinfo\n**Affiche les informations de Pu'Bot**\n\np;userinfo\n**Affiche tes informations**\n\np;serverinfo\n**Affiche les informations du serveur sur lequel tu te trouves**\n\np;say\n**Permet de faire dire quelque chose au bot**\n\np;annonce\n**Permet de créer une annonce sous forme d'embed**\n\np;embed\n**Permet de faire un message sous forme d'embed**\n\np;sondage\n**Permet de créer un sondage**")
 		.setFooter("Pu'Bot By WiiZ#9939")
 		.setTimestamp()
 
 		let mod_embed = new Discord.RichEmbed()
 		.setColor('#ff0000')
 		.addField("Modération de Pu'Bot", "p;clear\n**Permet de clear un nombre de message définit sur le serveur**\n\np;mute\n**Permet de mute un membre du serveur**\n\np;unmute\n**Permet d'unmute un membre du serveur**\n\np;warn\n**Permet de Warn un membre du serveur**\n\np;unwarn\n**Permet de supprimer le dernier warn d'un membre**\n\np;warns\n**Permet de voir les warns d'un membre**\n\np;kick\n**Permet de kick un membre du serveur**\n\np;ban1m\n**Permet de bannir un membre du serveur pendant 1 mois**\n\np;ban1y\n**Permet de bannir un membre du serveur pendant 1 an**")
+		.addField("Ajouter le bot", "[Clique ici !](https://discordapp.com/oauth2/authorize?client_id=621338749556490260&scope=bot&permissions=8)")
 		.setFooter("Pu'Bot By WiiZ#9939")
 		.setTimestamp()
 		message.channel.send('Commandes envoyés en MP !').then(m=>m.delete(5000))
