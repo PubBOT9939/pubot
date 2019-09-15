@@ -321,7 +321,7 @@ client.on('message', message => {
 
 		let info_embed = new Discord.RichEmbed()
 		.setColor('#04c2db')
-		.addField("Informations de Pu'Bot", "p;help\n**Affiche les commandes de Pu'Bot**\n\np;botinfo\n**Affiche les informations de Pu'Bot**\n\np;userinfo\n**Affiche tes informations**\n\np;serverinfo\n**Affiche les informations du serveur sur lequel tu te trouves**\n\np;say\n**Permet de faire dire quelque chose au bot**\n\np;annonce\n**Permet de créer une annonce sous forme d'embed**\n\np;embed\n**Permet de faire un message sous forme d'embed**\n\np;sondage\n**Permet de créer un sondage**")
+		.addField("Informations de Pu'Bot", "p;help\n**Affiche les commandes de Pu'Bot**\n\np;botinfo\n**Affiche les informations de Pu'Bot**\n\np;userinfo\n**Affiche tes informations**\n\np;serverinfo\n**Affiche les informations du serveur sur lequel tu te trouves**\n\np;say\n**Permet de faire dire quelque chose au bot**\n\np;annonce\n**Permet de créer une annonce sous forme d'embed**\n\np;embed\n**Permet de faire un message sous forme d'embed**")
 		.setFooter("Pu'Bot By WiiZ#9939")
 		.setTimestamp()
 
