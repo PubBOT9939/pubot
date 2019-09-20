@@ -2,9 +2,12 @@ const Discord = require('discord.js')
 const client = new Discord.Client()
 const fs = require('fs')
 
+
 var prefix = ("p;")
 
 const warns = JSON.parse(fs.readFileSync('./warns.json'))
+
+const usedCommandRecently = new Set();
 
 // Bienvenue
 client.on('guildMemberAdd', member => {
@@ -95,9 +98,9 @@ client.on('message', message => {
         if (count < 1 || count > 100) return message.channel.send("Veuillez indiquer un nombre entre 1 et 100")
         message.channel.bulkDelete(count + 1, true)
     }
+});
 
-})
-
+// MUTE | UNMUTE | WARNS | WARN | UNWARN | USER INFO |BOT INFO | SERVER INFO | INVITE | PUB
 client.on("message", message => {
     if (!message.guild) return
     let args = message.content.trim().split(/ +/g)
@@ -251,6 +254,22 @@ client.on("message", message => {
 
     }
 
+    if(args[0].toLowerCase() === prefix + "pub"){
+    	let xoargs = message.content.split(" ").slice(1);
+    	let xo03 = xoargs.join(" ")
+    	var xo02 = message.guild.channels.find('name', "pupub")
+    	if(!xo02) return message.reply(" Channel ``pupub`` introuvable.")
+    	if(message.channel.name !== 'pupub') return message.reply(' Commande à effectuer dans ``pupub``')
+    	if(!xo03) return message.reply(" Merci d'écrire une pub à envoyer")
+	    	var embedpub_global = new Discord.RichEmbed()
+	    	.setColor("0x8BCC14")
+	    	.setTitle("Pub Globale")
+	    	.addField("Pub De :", message.author.username)
+	    	.setDescription(xo03)
+	    	.setTimestamp()
+    	client.channels.findAll('name', "pupub").forEach(channel => channel.send(embedpub_global))	
+    }
+
     // if(args[0].toLowerCase === prefix + "sondage"){
     // 	if(!message.member.hasPermission("MANAGE_MESSAGES")) return message.channel.send('Vous ne pouvez pas effectuer de sondage').then(m=>m.delete(7000))
 
@@ -272,9 +291,9 @@ client.on("message", message => {
     // 		return message.reply(" Tu n'as pas la permission d'effectuer des sondages").then(m=>m.delete(10000))
     // 	}
     // }
-
 });
 
+// SAY | ANNONCE | EMBED
 client.on('message', message => {
 
 	if(message.author.bot) return;
@@ -313,8 +332,29 @@ client.on('message', message => {
 			.setTimestamp()
 		message.channel.send(embed);
 	}
-})
+});
 
+// SERVER LIST
+client.on('message', message => {
+
+	const roleColor = message.guild.me.displayHexColor === "#000000" ? "#ffffff" : message.guild.me.displayHexColor;
+
+	if(message.content === prefix + "serverlist"){
+		let bicon = client.user.displayAvatarURL;
+		let string = '';
+		client.guilds.forEach(guild => {
+			string += guild.name + '\n';})
+			let bun = client.user.username;
+			let serverlist_embed = new Discord.RichEmbed()
+				.setColor(roleColor)
+				.addField("Mes Serveurs", string)
+				.setTimestamp()
+				.setFooter("Commande Demandée par: " + message.author.username, message.author.displayAvatarURL)
+			message.channel.send(serverlist_embed)
+			}
+});
+
+// help
 client.on('message', message => {
 	if(!message.guild) return
 
@@ -324,7 +364,7 @@ client.on('message', message => {
 
 		let info_embed = new Discord.RichEmbed()
 		.setColor('#04c2db')
-		.addField("Informations de Pu'Bot", "p;help\n**Affiche les commandes de Pu'Bot**\n\np;botinfo\n**Affiche les informations de Pu'Bot**\n\np;userinfo\n**Affiche tes informations**\n\np;serverinfo\n**Affiche les informations du serveur sur lequel tu te trouves**\n\np;say\n**Permet de faire dire quelque chose au bot**\n\np;annonce\n**Permet de créer une annonce sous forme d'embed**\n\np;embed\n**Permet de faire un message sous forme d'embed**\n\np;sondage\n**Permet de créer un sondage**")
+		.addField("Informations de Pu'Bot", "p;help\n**Affiche les commandes de Pu'Bot**\n\np;botinfo\n**Affiche les informations de Pu'Bot**\n\np;userinfo\n**Affiche tes informations**\n\np;serverinfo\n**Affiche les informations du serveur sur lequel tu te trouves**\n\np;say\n**Permet de faire dire quelque chose au bot**\n\np;annonce\n**Permet de créer une annonce sous forme d'embed**\n\np;embed\n**Permet de faire un message sous forme d'embed**\n\np;serverlist\n**Permet de voir touts les serveurs où est le bot**")
 		.setFooter("Pu'Bot By WiiZ#9939")
 		.setTimestamp()
 
@@ -340,6 +380,7 @@ client.on('message', message => {
 		})
 	}
 });
+
 
 client.on('ready', () => {
 	client.user.setActivity("p;help | Pu'Bot");
