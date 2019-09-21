@@ -373,9 +373,8 @@ client.on('message', message => {
 		.setFooter("Pu'Bot By WiiZ#9939")
 		.setTimestamp()
 		message.channel.send('Commandes envoyés en MP !').then(m=>m.delete(5000))
-		message.author.send(info_embed).then(ie=> {
-			message.author.send(mod_embed)
-		})
+		message.author.send(info_embed)
+		message.author.send(mod_embed)
 	}
 });
 
