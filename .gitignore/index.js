@@ -335,7 +335,6 @@ client.on('message', message => {
 // SERVER LIST
 client.on('message', message => {
 
-	const roleColor = message.guild.me.displayHexColor === "#000000" ? "#ffffff" : message.guild.me.displayHexColor;
 
 	if(message.content === prefix + "serverlist"){
 		let bicon = client.user.displayAvatarURL;
@@ -344,7 +343,7 @@ client.on('message', message => {
 			string += guild.name + '\n';})
 			let bun = client.user.username;
 			let serverlist_embed = new Discord.RichEmbed()
-				.setColor(roleColor)
+				.setColor("#ffffff")
 				.addField("Mes Serveurs", string)
 				.setTimestamp()
 				.setFooter("Commande Demandée par: " + message.author.username, message.author.displayAvatarURL)
@@ -373,8 +372,9 @@ client.on('message', message => {
 		.setFooter("Pu'Bot By WiiZ#9939")
 		.setTimestamp()
 		message.channel.send('Commandes envoyés en MP !').then(m=>m.delete(5000))
-		message.author.send(info_embed)
-		message.author.send(mod_embed)
+		message.author.send(info_embed).then(ie=> {
+			message.author.send(mod_embed)
+		})
 	}
 });
 
