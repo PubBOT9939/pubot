@@ -7,8 +7,6 @@ var prefix = ("p;")
 
 const warns = JSON.parse(fs.readFileSync('./warns.json'))
 
-const usedCommandRecently = new Set();
-
 // Bienvenue
 client.on('guildMemberAdd', member => {
 	let gma_embed = new Discord.RichEmbed()
