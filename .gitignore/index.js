@@ -33,7 +33,7 @@ client.on('message', message => {
 
 	if(args[0].toLowerCase() === prefix + "kick"){
 
-	message.delete() 
+	message.delete()
 
 		if(!message.member.hasPermission("KICK_MEMBERS")) return message.channel.send("**Vous n'avez pas la permission d'utiliser cette commande** :cry:").then(m=>m.delete(10000))
 		let member = message.mentions.members.first()
@@ -87,7 +87,7 @@ client.on('message', message => {
 
    if (!message.guild) return
    let args = message.content.trim().split(/ +/g)
- 
+
     if (args[0].toLowerCase() === prefix + "clear") {
         if (!message.member.hasPermission('MANAGE_MESSAGES')) return message.channel.send("Vous n'avez pas la permission d'utiliser cette commande")
         let count = parseInt(args[1])
@@ -109,7 +109,7 @@ client.on("message", message => {
         let member = message.mentions.members.first()
         if (!member) return message.channel.send("Membre introuvable")
         if (member.highestRole.calculatedPosition >= message.member.highestRole.calculatedPosition && message.author.id !== message.guild.ownerID) return message.channel.send("Vous ne pouvez pas mute ce membre")
-        if (member.highestRole.calculatedPosition >= message.guild.me.highestRole.calculatedPosition || member.id === message.guild.ownerID) return message.channel.send("Je ne peux pas mute ce membre")
+        if (member.id === message.guild.ownerID) return message.channel.send("Je ne peux pas mute ce membre")
         let muterole = message.guild.roles.find(role => role.name === 'Muted')
         if (muterole) {
             member.addRole(muterole)
@@ -133,7 +133,7 @@ client.on("message", message => {
 	    let member = message.mentions.members.first()
 	    if(!member) return message.channel.send("Membre introuvable")
 	    if(member.highestRole.calculatedPosition >= message.member.highestRole.calculatedPosition && message.author.id !== message.guild.ownerID) return message.channel.send("Vous ne pouvez pas unmute ce membre.")
-	    if(member.highestRole.calculatedPosition >= message.guild.me.highestRole.calculatedPosition || member.id === message.guild.ownerID) return message.channel.send("Je ne pas unmute ce membre.")
+	    if(member.id === message.guild.ownerID) return message.channel.send("Je ne pas unmute ce membre.")
 	    let muterole = message.guild.roles.find(role => role.name === 'Muted')
 	    if(muterole && member.roles.has(muterole.id)) member.removeRole(muterole)
 	    message.channel.send(member + ' a été unmute :white_check_mark:')
@@ -265,7 +265,7 @@ client.on("message", message => {
 	    	.addField("Pub De :", message.author.username)
 	    	.setDescription(xo03)
 	    	.setTimestamp()
-    	client.channels.findAll('name', "pupub").forEach(channel => channel.send(embedpub_global))	
+    	client.channels.findAll('name', "pupub").forEach(channel => channel.send(embedpub_global))
     }
 
     // if(args[0].toLowerCase === prefix + "sondage"){
