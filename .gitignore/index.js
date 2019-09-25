@@ -29,6 +29,7 @@ client.on('guildMemberRemove', member => {
 // Kick
 client.on('message', message => {
 	if(!message.guild) return
+	if(message.author.client) return;
 	let args = message.content.trim().split(/ +/g)
 
 	if(args[0].toLowerCase() === prefix + "kick"){
@@ -139,6 +140,36 @@ client.on("message", message => {
 	    message.channel.send(member + ' a été unmute :white_check_mark:')
 	}
 
+	if(args[0].toLowerCase() === prefix + "report"){
+
+		let messageArray = message.content.split(" ");
+		let args = messageArray.slice(1);
+
+		let rUser = message.guild.member(message.mentions.users.first() || message.guild.members.get(args[0]));
+		if(!rUser) return message.channel.send("Couldn't find user.");
+
+		// Reason of the report
+		let reason = args.join(" ").slice(22);
+
+		let reportEmbed = new Discord.RichEmbed()
+		.setDescription("Reports")
+		.setColor("#15f153")
+		.addField("Reported User", rUser + " with ID: ``" + rUser.id + "``")
+		.addField("Reported By", message.author + " with ID: ``" + message.author.id + "``")
+		.addField("Channel", message.channel)
+		.addField("Time", message.createdAt)
+		.addField("Reason", `${reason}`);
+
+		let reportsChannel = message.guild.channels.find("name", "reports");
+		if(!reportsChannel) return message.channel.send("Couldn't find reports channel");
+
+		message.delete().catch(O_o=>{});
+		reportsChannel.send(reportEmbed);
+		message.channel.send(":warning: **Utilisateur Report !** :warning:").then(m=>m.delete(10000))
+
+
+	}
+
 	if (args[0].toLowerCase() === prefix + "warns") {
 	    if (!message.member.hasPermission('MANAGE_MESSAGES')) return message.channel.send("Vous n'avez pas la permission d'utiliser cette commande")
 	    let member = message.mentions.members.first()
@@ -207,7 +238,8 @@ client.on("message", message => {
 		.addField("**Discriminator:**", `${message.author.discriminator}`, true)
 		.addField("**Status:**", `${message.author.presence.status}`, true)
 		.addField("**Created At:**", `${message.author.createdAt}`, true)
-		.addField("**Ajouter le bot**", "[Clique ici !](https://discordapp.com/oauth2/authorize?client_id=621338749556490260&scope=bot&permissions=8)")
+		.addField("**Ajouter le bot**", "[Clique ici !](https://discordapp.com/oauth2/authorize?client_id=621338749556490260&scope=bot&permissions=8)", true)
+		.addField("**Serveur Support**", "[Clique ici !](https://discord.gg/jpBKqgy)", true)
 		.setFooter(`By ${client.user.username}`, client.user.displayAvatarURL);
 		message.channel.send('UserInfo envoyés en MP !').then(m=>m.delete(5000))
 		message.author.send(uEmbed);
@@ -227,7 +259,8 @@ client.on("message", message => {
 		.addField('**Status**', client.user.presence.status, true)
 		.addField('**Created By**', "WiiZ#9939", true)
 		.addField('**Created At**', client.user.createdAt, true)
-		.addField("**Ajouter le bot**", "[Clique ici !](https://discordapp.com/oauth2/authorize?client_id=621338749556490260&scope=bot&permissions=8)")
+		.addField("**Ajouter le bot**", "[Clique ici !](https://discordapp.com/oauth2/authorize?client_id=621338749556490260&scope=bot&permissions=8)", true)
+		.addField("**Serveur Support**", "[Clique ici !](https://discord.gg/jpBKqgy)", true)
 		.setFooter(`By ${client.user.username}`, client.user.displayAvatarURL)
 		message.channel.send('BotInfo envoyés en MP !').then(m=>m.delete(5000))
 		message.author.send(botinfo_embed);
@@ -245,7 +278,8 @@ client.on("message", message => {
 		.addField("**Guild Owner:**", `${message.guild.owner}`, true)
 		.addField("**Member Count:**", `${message.guild.memberCount}`, true)
 		.addField("**Role Count:**", `${message.guild.roles.size}`, true)
-		.addField("**Ajouter le bot**", "[Clique ici !](https://discordapp.com/oauth2/authorize?client_id=621338749556490260&scope=bot&permissions=8)")
+		.addField("**Ajouter le bot**", "[Clique ici !](https://discordapp.com/oauth2/authorize?client_id=621338749556490260&scope=bot&permissions=8)", true)
+		.addField("**Serveur Support**", "[Clique ici !](https://discord.gg/jpBKqgy)", true)
 		.setFooter(`By ${client.user.username}`, client.user.displayAvatarURL);
 		message.channel.send('ServerInfo envoyés en MP !').then(m=>m.delete(5000))
 		message.author.send(sEmbed);
@@ -263,32 +297,35 @@ client.on("message", message => {
 	    	.setColor("0x8BCC14")
 	    	.setTitle("Pub Globale")
 	    	.addField("Pub De :", message.author.username)
+				.addField("Serveur Support", "[Clique ici !](https://discord.gg/jpBKqgy)")
 	    	.setDescription(xo03)
 	    	.setTimestamp()
     	client.channels.findAll('name', "pupub").forEach(channel => channel.send(embedpub_global))
     }
 
-    // if(args[0].toLowerCase === prefix + "sondage"){
-    // 	if(!message.member.hasPermission("MANAGE_MESSAGES")) return message.channel.send('Vous ne pouvez pas effectuer de sondage').then(m=>m.delete(7000))
 
-    // 	if(message.member.hasPermission('MANAGE_MESSAGES')){
-    // 		let args = message.content.split(" ").slice(1);
-    // 		let thingToEcho = args.join(" ")
-    // 		var embed = new Discord.RichEmbed()
-    // 			.setDescription("Sondage")
-    // 			.addField(thingToEcho, "Répondre avec ✅ ou ❌")
-    // 			.setColor("0xB40404")
-    // 			.setTimestamp()
-    // 		message.channel.sendEmbed(embed)
-    // 		.then(function (message) {
-    // 			message.react('✅')
-    // 			message.react('❌')
-    // 		}).catch(function() {
-    // 		});
-    // 	} else {
-    // 		return message.reply(" Tu n'as pas la permission d'effectuer des sondages").then(m=>m.delete(10000))
-    // 	}
-    // }
+		 if(args[0].toLowerCase() === prefix + "sondage"){
+			 message.delete()
+			 if(!message.member.hasPermission("MANAGE_MESSAGES")) return message.channel.send("Vous ne pouvez pas effectuer de sondages.").then(m=>m.delete(20000))
+
+			 if(message.member.hasPermission("MANAGE_MESSAGES")){
+				 let argsondage = args.join(" ").slice(9);
+				 if(!argsondage) return message.channel.send("❌ **ERREUR** ❌\nMerci d'écrire un sondage correct !\nExemple : p;sondage Aimez vous les pâtes ?");
+				 var embed = new Discord.RichEmbed()
+				 .setDescription("Sondage")
+				 .addField(argsondage, "Répondre avec ✅ | 🤔 | ❌")
+				 .setColor("0xB40404")
+				 .setTimestamp()
+				message.channel.send(embed).then(function (message) {
+					message.react("✅").then(mr=> {
+						message.react("🤔").then(mre=> {
+							message.react("❌")
+						})
+					})
+				})
+
+			 }
+		 }
 });
 
 // SAY | ANNONCE | EMBED
@@ -351,6 +388,7 @@ client.on('message', message => {
 			}
 });
 
+
 // help
 client.on('message', message => {
 	if(!message.guild) return
@@ -361,14 +399,15 @@ client.on('message', message => {
 
 		let info_embed = new Discord.RichEmbed()
 		.setColor('#04c2db')
-		.addField("Informations de Pu'Bot", "p;help\n**Affiche les commandes de Pu'Bot**\n\np;botinfo\n**Affiche les informations de Pu'Bot**\n\np;userinfo\n**Affiche tes informations**\n\np;serverinfo\n**Affiche les informations du serveur sur lequel tu te trouves**\n\np;say\n**Permet de faire dire quelque chose au bot**\n\np;annonce\n**Permet de créer une annonce sous forme d'embed**\n\np;embed\n**Permet de faire un message sous forme d'embed**\n\np;serverlist\n**Permet de voir touts les serveurs où est le bot**")
+		.addField("Informations de Pu'Bot", "p;help\n**Affiche les commandes de Pu'Bot**\n\np;botinfo\n**Affiche les informations de Pu'Bot**\n\np;userinfo\n**Affiche tes informations**\n\np;serverinfo\n**Affiche les informations du serveur sur lequel tu te trouves**\n\np;say\n**Permet de faire dire quelque chose au bot**\n\np;annonce\n**Permet de créer une annonce sous forme d'embed**\n\np;embed\n**Permet de faire un message sous forme d'embed**\n\np;serverlist\n**Permet de voir touts les serveurs où est le bot**\n\np;sondage\n**Permet d'effectuer un sondage**")
 		.setFooter("Pu'Bot By WiiZ#9939")
 		.setTimestamp()
 
 		let mod_embed = new Discord.RichEmbed()
 		.setColor('#ff0000')
-		.addField("Modération de Pu'Bot", "p;clear\n**Permet de clear un nombre de message définit sur le serveur**\n\np;mute\n**Permet de mute un membre du serveur**\n\np;unmute\n**Permet d'unmute un membre du serveur**\n\np;warn\n**Permet de Warn un membre du serveur**\n\np;unwarn\n**Permet de supprimer le dernier warn d'un membre**\n\np;warns\n**Permet de voir les warns d'un membre**\n\np;kick\n**Permet de kick un membre du serveur**\n\np;ban1m\n**Permet de bannir un membre du serveur pendant 1 mois**\n\np;ban1y\n**Permet de bannir un membre du serveur pendant 1 an**")
-		.addField("Ajouter le bot", "[Clique ici !](https://discordapp.com/oauth2/authorize?client_id=621338749556490260&scope=bot&permissions=8)")
+		.addField("Modération de Pu'Bot", "p;clear\n**Permet de clear un nombre de message définit sur le serveur**\n\np;mute\n**Permet de mute un membre du serveur**\n\np;unmute\n**Permet d'unmute un membre du serveur**\n\np;warn\n**Permet de Warn un membre du serveur**\n\np;unwarn\n**Permet de supprimer le dernier warn d'un membre**\n\np;warns\n**Permet de voir les warns d'un membre**\n\np;kick\n**Permet de kick un membre du serveur**\n\np;ban1m\n**Permet de bannir un membre du serveur pendant 1 mois**\n\np;ban1y\n**Permet de bannir un membre du serveur pendant 1 an**\n\np;report\n**Permet de report un utilisateur**\n **__Requiert un salon__** ``reports``\n\n\n")
+		.addField("Ajouter le bot", "[Clique ici !](https://discordapp.com/oauth2/authorize?client_id=621338749556490260&scope=bot&permissions=8)", true)
+		.addField("Serveur Support", "[Clique ici !](https://discord.gg/jpBKqgy)", true)
 		.setFooter("Pu'Bot By WiiZ#9939")
 		.setTimestamp()
 		message.channel.send('Commandes envoyés en MP !').then(m=>m.delete(5000))
