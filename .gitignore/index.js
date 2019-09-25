@@ -288,6 +288,7 @@ client.on("message", message => {
     }
 
     if(args[0].toLowerCase() === prefix + "pub"){
+			message.delete();
     	let xoargs = message.content.split(" ").slice(1);
     	let xo03 = xoargs.join(" ")
     	var xo02 = message.guild.channels.find('name', "pupub")
@@ -341,7 +342,7 @@ client.on('message', message => {
 	const cmd = args.shift().toLowerCase();
 
 	if(cmd === "say") {
-		if(message.deletable) message.delete();
+		message.delete();
 
 		if(args.length < 1) return message.reply(" Rien à dire?").then(m=>m.delete(5000));
 
@@ -350,6 +351,7 @@ client.on('message', message => {
 	}
 
 	if(cmd === "annonce"){
+		message.delete();
 		if(args.length < 1) return message.reply(" Rien à dire?").then(m=>m.delete(5000))
 		const annonce = new Discord.RichEmbed()
 			.setColor(roleColor)
@@ -359,8 +361,7 @@ client.on('message', message => {
 	}
 
 	if(cmd === "embed"){
-		if(message.deletable) message.delete();
-
+		message.delete();
 		if(args.length < 1) return message.reply(" Rien à dire ?").then(m=>m.delete(5000))
 		const embed = new Discord.RichEmbed()
 			.setColor(roleColor)
@@ -375,6 +376,7 @@ client.on('message', message => {
 
 
 	if(message.content === prefix + "serverlist"){
+		message.delete();
 		let bicon = client.user.displayAvatarURL;
 		let string = '';
 		client.guilds.forEach(guild => {
