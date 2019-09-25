@@ -150,7 +150,7 @@ client.on("message", message => {
 
 		// Reason of the report
 		let reason = args.join(" ").slice(22);
-		if(!reason) return message.channel.send
+		if(!reason) return message.channel.send("Merci de noous dire la raison de ce report.")
 
 		let reportEmbed = new Discord.RichEmbed()
 		.setDescription("Reports")
